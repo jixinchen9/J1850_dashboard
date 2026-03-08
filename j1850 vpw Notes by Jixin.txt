@@ -1,0 +1,46 @@
+j1850 vpw
+Notes by Jixin 08-03-2026
+
+bits
+
+bits are not 0 and 1 by active/passive or amplitude, they are 0 and 1 by duration:
+
+passive 0: 	-__-
+active 0:	_----_
+
+passive 1:	-____-
+active 1:	_--_
+
+falling edge precedes a 1 or 0, 
+	if it is 64, is is 0, 
+	if it is 128, it is 1
+rising edge precedes a 1 or 0, 
+	if it is 64, it is 1
+	if it is 128 , it is zero
+	
+start of frame SOF
+
+always a passive to active followed by 200us active _------_
+the end of 200us means the start of first data bit, bc it is a falling edge
+
+End of data EOD
+active to passive transition followed by 200us passive -______-
+
+CRC
+
+CRC byte is attached after data to ensure transmission integrity, leave understand for later
+
+NB normalization bit
+
+brings the bus to a passive level at the end of 8th bit of NB to precede a IFR
+
+IFR in frame response
+
+arduino or mc68 can send a response of 1 or more bytes
+
+EOF end of frame
+
+if there is an IFR, message is ended with EOF, always active to passive followed by 280us at passive, EOD can become EOF if line stays passive
+
+IFS
+
