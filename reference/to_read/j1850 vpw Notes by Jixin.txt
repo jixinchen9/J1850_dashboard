@@ -44,3 +44,30 @@ if there is an IFR, message is ended with EOF, always active to passive followed
 
 IFS
 
+
+what is the application layer?
+
+GM uses 3 byte headers (fast fieros)
+
+byte 1 priority but also header style, IFR yes /no, addressing mode, 
+
+byte 2 physical ID of dest
+
+byte 3 physical ID of source
+
+byte	0	1	2	3	4	5	6	7
+		0	0	1	1	0	
+
+SAE J2178-1 would have details, but can also log the scanner query
+example on fieros
+
+request current value of PID (parameter ID):
+[0x68 0x6A 0xF1 0x01 PID]
+
+0x68: priority byte
+0x6A: for mandated signals or PRNs, requests are directed to 6A instead of PCM controller
+0xF1: tool address
+
+PID bytes listed in J2178-2
+
+on byte order of data bytes, MSB transmit first (unlike J1939) 2178-2 section 7.4
