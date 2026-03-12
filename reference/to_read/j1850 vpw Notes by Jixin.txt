@@ -71,3 +71,5 @@ request current value of PID (parameter ID):
 PID bytes listed in J2178-2
 
 on byte order of data bytes, MSB transmit first (unlike J1939) 2178-2 section 7.4
+
+j2178-2 lists how to convert bytes to data toward end of document, for example coolant temp is UNM-8, or 8 bits, offset and scaling described in table 24
