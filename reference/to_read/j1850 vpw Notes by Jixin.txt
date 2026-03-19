@@ -29,6 +29,7 @@ active to passive transition followed by 200us passive -______-
 CRC
 
 CRC byte is attached after data to ensure transmission integrity, leave understand for later
+https://www.sunshine2k.de/articles/coding/crc/understanding_crc.html#ch43
 
 NB normalization bit
 
@@ -73,3 +74,65 @@ PID bytes listed in J2178-2
 on byte order of data bytes, MSB transmit first (unlike J1939) 2178-2 section 7.4
 
 j2178-2 lists how to convert bytes to data toward end of document, for example coolant temp is UNM-8, or 8 bits, offset and scaling described in table 24
+
+------------------------------
+*  logs from P12 and ELM327  *
+------------------------------
+
+TOOL: 68 6A F1 01 05 7E
+
+
+68		0110 1000	'priority byte'
+	
+	bits 7-5 is priority, 0 is higher
+	bit 4 is header style, 0 3 byte GM
+	bits 3-0: 1 0 0 0 is 'function'
+	
+6A		destination address, 6A is request legislated diagnostic
+F1		Source address, F1 is scan tool
+
+01		Request Current Powertrain Diagnostic Data
+05		SAE J1979 compatible PRN, engine coolant temperature (listed as 0005)
+7E		must be CRC?
+
+Response: 48 6B 10 41 05 00 90
+
+48		0100 1000
+6B		response legislated diagnostics
+10		10 - 17 is 'engine controller' GM from fastfieros site
+
+41		response power train diagnostic (from fastfieros)
+05		PRN of response, coolant temp
+00		coolant temp is listed as UNM-08-102 in J2178-2	
+			unsigned numeric slot, 8 bits, scaling 1, offset +40, byte = data + 40, data = byte - 40
+90 		CRC?
+
+tool: 68 6A F1 01 0D 96
+
+68: same
+6A: same
+F1: same
+01: same
+
+0D: vehicle speed low res metric 1kph / bit UNM-08-101
+96: CRC?
+
+response: 48 6B 10 41 0D 00 CA
+48: same
+6B: same
+10: same
+41: same
+00:	from UNM-08-101, 1bit / 1 kph, range from 0 -255 kph
+
+CA: CRC?
+
+
+
+
+
+
+follow up test:
+
+request DTC to see byte [3] in request, expect '03'
+request vehicle information to see byte[3], expect '49'
+

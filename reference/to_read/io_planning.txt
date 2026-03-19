@@ -1,0 +1,25 @@
+D150 dash has
+
+voltmeter
+	recommend ADC
+coolant temp
+	use J1850
+veh speed
+	use j1850
+fuel level
+	could use a level sensor that lets P12 ECU sort it out
+	already have 0-75ohm sender that can be wire into chassis wires
+oil pressure
+	could fake w engine speed
+	oil pressure switch j1850 PID unknown
+	
+oil pressure warning light
+
+brake light
+
+low fuel light?
+
+high beam indicator?
+
+need MIL/CEL 
+	
